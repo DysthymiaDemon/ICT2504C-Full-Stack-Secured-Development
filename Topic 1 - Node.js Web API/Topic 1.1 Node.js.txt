@@ -1,0 +1,68 @@
+Welcome to the lesson on Node.js Web API.
+By the end of this lesson, you will be able to explain the roles of Node.js in full-step development,
+define what a RESTful API is, discuss how to use Express.js for building Web APIs
+and outline some useful packages.
+Let's step into Node.js for full-step development.
+Full-step development refers to the end-to-end Web Application development, including the front-end and back-end.
+It comprises two key components, front-end, which deals with the user interface and client-side functionality.
+Back-end is responsible for business logic and interactions with database and other systems.
+Node.js is an open-source server-side JavaScript runtime environment.
+It serves as a powerful tool for backend development, offering the following key features.
+Asynchronous, it uses an event-driven long-blocking IO model.
+This means it can handle multiple tasks without blocking the execution flow.
+Scalability, it can handle a large number of requests and processing tasks,
+making it suitable for building highly scalable applications.
+Speed, it is the popular choice for building high-performance Web applications
+due to its efficient event-driven architecture.
+Cost Platform, it can run on different operating systems,
+allowing developers to create applications on different platforms.
+You can use the command node-v to check the installed Node.js version.
+Here's a simple example to print hello Node.js to the console using Node.js.
+First, we create a JavaScript file, let's name it app.js.
+Open your terminal or command prompt.
+Navigate to the directory where you saved your app.js file using the cd command.
+Once you are in the correct directory, run your Node.js script by entering the command node app.js.
+You will see the output in the terminal, hello Node.js.
+This code example demonstrates the basic process of creating and running a Node.js script
+to print a message to the console.
+NPM node package manager is a tool for managing JavaScript packages in Node.js projects.
+It is bundled with Node.js by default.
+Here are some common NPM commands.
+NPM init-y.
+It initializes a new Node.js project with default options.
+The y flag stands for yes.
+NPM install.
+It installs all dependencies listed in the package.json file.
+The short hand for this is NPM i.
+NPM install package.
+This installs a specific package.
+NPM install package add version.
+This installs a specific version of a package.
+NPM install-g package installs a package globally on your system.
+Allow you to use it across different projects.
+The g flag stands for global.
+NPM install-save-deb package.
+This installs a package as a development dependency.
+It will not be used for production.
+NPM uninstall package.
+It removes a package from your project's dependencies.
+NPM update.
+It updates all packages to their latest versions as specified in the package.json file.
+Lastly, we have NPM run script.
+It executes a custom script defined in the scripts section of your package.json file.
+You can use the command npm-v to check the npm version.
+The package.json file is a json file that serves the manifest for Node.js projects.
+It contains metadata about the project, including its name, version, dependencies,
+scripts, and other important information.
+It provides a clear and structured way to document and manage project details,
+making it easier to collaborate with others and ensure consistency in the development and deployment process.
+Business Studio Code is a popular code editor.
+It includes intelligence for Node.js by default.
+This means it provides intelligent code completion and suggestions,
+making it easier to write Node.js code.
+It offers many extensions that enhance the development experience.
+There are some useful extensions.
+GitHub Copilot is an AI-powered coding assistant that helps you write code faster and more efficiently.
+It's free for students through the GitHub Student Developer Pack.
+Next, Material Icon theme.
+It enhances the appearance of VS Code by adding colorful icons to folders and files.

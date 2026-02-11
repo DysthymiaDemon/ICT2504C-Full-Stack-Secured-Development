@@ -1,0 +1,56 @@
+Let's explore some useful packages for Node.js project.
+Node.mon is a tool that helps develop Node.js-based application
+by automatically restarting the Node application
+when file changes in the directory are detected.
+It is particularly useful during the development process
+as it eliminates the need to manually stop and restart your application
+every time you make a code change.
+Node.mon is often used in combination with MPM scripts.
+You can define a script in your package.json file
+to run your application with Node.mon.
+To install Node.mon, you can run the command
+npmi-save-dev-node.mon
+The save-dev-vflag indicates that Node.mon is a development dependency
+and should be listed in package.json file under the
+Dev Dependencies section.
+In this example, the start script is defined.
+When you run npm start, npm will execute the command
+Node.mon-index.js.
+This command tells Node.mon to watch for changes
+and restart the application when any changes are detected.
+.env package is used to load environment variables
+from a .env file into the process.env object.
+To install .env, you can run the command npmi.env.
+In the file.env, define your environment-specific
+configuration variables as key value pairs.
+In your JavaScript code, import the package
+Node.env loads the variables into the process.env object,
+making them accessible in your code.
+By using .env, you can keep your sensitive
+or environment-specific configuration
+separate from your code, which is essential
+for security and portability in various environments.
+For example, development, testing, and production.
+Cost stands for Cost Origin Resource Sharing.
+It is a security feature implemented by web browsers.
+By default, web browsers enforce the same origin policy,
+which means that a web page can only make requests
+to the same domain from which it was served.
+Cost package provides a middleware
+that can be used to enable cost origin requests
+with various options.
+To install cost, you can run the command npmi.cost.
+For ExpressApp, the app.use function
+is used to mount middleware in Express.
+And in this case, it's adding the cost middleware
+for all routes.
+Cost is an essential feature for building web applications
+that need to interact with API hosted on different domains
+while maintaining security and control
+over who can access the API.
+In this topic, we have learned how to
+explain the roles of Node.js in full state development,
+define what a RESTful API is,
+discuss how to use Express.js for building web API,
+and outline some useful packages.
+Thank you.

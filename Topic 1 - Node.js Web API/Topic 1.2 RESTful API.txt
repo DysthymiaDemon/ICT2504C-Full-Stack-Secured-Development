@@ -1,0 +1,68 @@
+Let's learn RESTful API.
+A RESTful API or Representational State Transfer API
+is a set of principles for designing and structuring web services.
+It's resource-based.
+We need to identify the resources that the API exposes.
+Common examples are user and product.
+CIUD operations.
+CIUD stands for Create, Read, Update, and Delete.
+These are the basic operations that can be performed on resources.
+Uniform interface.
+There is a standardized way of interacting with resources.
+It includes the use of HTTP methods, URL, and JSON data.
+State needs needs.
+Each request must contain all the information needed to process that request.
+It does not rely on any previous request or server session.
+The communication between the client and the server API is based on a request-response model.
+Client sends requests to the API and the API returns the response to the client.
+HTTP or Hypertext Transfer Protocol defines a set of request methods
+that are used by the client to send requests to the server.
+GET is used to read data from resources.
+POST is used to create a new resource.
+PUT is used to update an existing resource.
+DELETE is used to delete a resource.
+The HTTP methods GET, POST, PUT, and DELETE are often used to map the CIUD operations
+for Create, Read, Update, and Delete.
+In addition to these four primary HTTP methods,
+there are other methods like patch, head, and options.
+A route is a path that defines a specific resource or a group of related resources within the API.
+For example, SlashProduct might represent a collection of product resources.
+An endpoint is a specific URL pattern within a route and is associated with the HTTP method.
+GET slash product.
+This endpoint represents the HTTP GET method for fetching a list of all products.
+GET slash product slash ID.
+This endpoint represents the HTTP GET method for fetching a specific product
+where ID is the identifier of the product.
+POST slash product.
+This endpoint represents the HTTP POST method for creating a new product.
+PUT slash product slash ID.
+This endpoint represents the HTTP PUT method for updating an existing product
+where ID is the identifier of the product to be updated.
+Similarly, DELETE slash product slash ID.
+This endpoint represents the HTTP DELETE method for deleting a specific product
+while ID is also the identifier of the product to be deleted.
+HTTP uses response status codes to indicate the result of a client's request to the server.
+200 OK means the request was successful and the server has returned the requested data.
+400 back request means invalid syntax or missing information in the request.
+401 unauthorized means the client is not authorized to access the requested resource.
+403 forbidden means the client does not have permission to access the requested resource.
+404 not found means the requested resource could not be found on the server.
+500 internal server error, the server encountered an expected error.
+HTTP status codes provide valuable information to the client about the success or failure of the request,
+allowing the client to take appropriate action.
+JSON or JavaScript object notation is a lightweight data interchange format
+that is commonly used in API requests and response bodies.
+In the JSON for one user, the user object has three attributes, name, email and age.
+Each attribute is associated with a corresponding value.
+In JSON for list of users, there is an outer object with one attribute, users.
+The user's attribute is associated with an array,
+deloted by square brackets that contains two user objects.
+JSON's simplicity and readability make it a popular choice
+for representing structured data in API requests and responses.
+Let's introduce some popular frameworks for web API development.
+There are ExpressJS for NodeJS, ASP.NET call for C-Shop,
+Class, Python and Spring Boot for Java.
+Postman is a popular and widely used tool for testing web APIs.
+Postman saved your past request, making it convenient to revisit and reuse previous requests.
+It also offers the team collaboration feature,
+allowing teams to work together on API testing and documentation.
