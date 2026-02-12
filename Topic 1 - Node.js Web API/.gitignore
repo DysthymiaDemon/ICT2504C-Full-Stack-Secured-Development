@@ -2,7 +2,6 @@
 node_modules/
 learning-app/server/node_modules/
 
-*.mp4
 *.log
 npm-debug.log*
 
