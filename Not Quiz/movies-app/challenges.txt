@@ -1,53 +1,95 @@
-Challenge Implementation Guide (Movies API)
+Movies API Challenge (Step-by-Step in Postman)
 
-1) Optional genre filter in GET /movie
-- Read the query string value:
-  let genre = req.query.genre;
-- If genre is provided, add it to the Sequelize where condition:
-  condition.genre = { [Op.like]: `%${genre}%` };
-- This allows filtering movies by genre keyword.
+1) Start the server
+- Open terminal in: Not Quiz/movies-app/server
+- Run: npm start
+- Default URL: http://localhost:3001
+- If 3001 is busy, change APP_PORT in .env to 3002, then restart.
 
-2) Optional minimum rating filter in GET /movie
-- Read the query string value:
-  let minRating = req.query.minRating;
-- If minRating is provided:
-  1. Convert it to a number.
-  2. Validate it is a valid number.
-  3. Add condition.rating = { [Op.gte]: parsedMinRating }.
-- If minRating is invalid, return HTTP 400 with a clear message.
+2) Create a Postman collection
+- Open Postman.
+- Click New Collection.
+- Name it: Movies API.
+- Add the requests below to this collection.
 
-3) Check duplicate title before creating a movie (POST /movie)
-- Before Movie.create(data), query database for same title.
-- If a movie with same title exists, return HTTP 400.
-- Example message:
-  "A movie with the same title already exists."
+3) Create movie (POST /movie)
+- Method: POST
+- URL: http://localhost:3001/movie
+- Body: raw + JSON
+- Paste:
+{
+  "title": "Inception",
+  "synopsis": "A thief enters dreams to steal secrets.",
+  "genre": "Science Fiction",
+  "director": "Christopher Nolan",
+  "releaseDate": "2010-07-16",
+  "rating": 8.8
+}
+- Click Send.
+- Expected: 200 OK with created movie JSON (includes id).
 
-4) Check duplicate title before updating a movie (PUT /movie/:id)
-- Only do duplicate check if title is being updated.
-- Query for same title but exclude current movie id:
-  where: { title: data.title, id: { [Op.ne]: id } }
-- If found, return HTTP 400 with duplicate-title message.
+4) Challenge test: duplicate title on create
+- Send the same POST request again (same title).
+- Expected: 400 Bad Request.
+- Expected message: duplicate title exists.
 
-5) Validation requirements for create and update
-- Use yup validation schema.
-- title: string, trimmed, required for create, max 150.
-- synopsis: string, trimmed, required for create, max 1500.
-- genre: string, trimmed, required for create, max 150.
-- director: string, trimmed, required for create, max 150.
-- releaseDate: required for create, date format YYYY-MM-DD.
-- rating: optional, number between 1 and 10, at most 1 decimal place.
+5) Get all movies (GET /movie)
+- Method: GET
+- URL: http://localhost:3001/movie
+- Click Send.
+- Expected: list of movies ordered by title ascending (A to Z).
 
-6) List endpoint ordering requirement
-- In GET /movie, use:
-  order: [['title', 'ASC']]
-- This ensures movies are returned in ascending title order.
+6) Challenge test: search by title or synopsis
+- Method: GET
+- URL: http://localhost:3001/movie?search=dream
+- Click Send.
+- Expected: returns movies where title OR synopsis contains "dream".
 
-7) Suggested endpoint test sequence
-- Create movie A (should pass).
-- Create movie A again with same title (should return 400).
-- Create movie B with different title (should pass).
-- GET /movie?search=keyword (should match title or synopsis).
-- GET /movie?genre=Action (should return only action movies).
-- GET /movie?minRating=8 (should return rating >= 8).
-- Update movie B title to movie A title (should return 400).
-- Delete movie by id (should return success message).
+7) Challenge test: optional genre filter
+- Method: GET
+- URL: http://localhost:3001/movie?genre=Science
+- Click Send.
+- Expected: only movies whose genre matches "Science".
+
+8) Challenge test: optional minRating filter
+- Method: GET
+- URL: http://localhost:3001/movie?minRating=8
+- Click Send.
+- Expected: only movies with rating >= 8.
+
+- Invalid test:
+  URL: http://localhost:3001/movie?minRating=abc
+  Expected: 400 Bad Request.
+
+9) Get movie by id (GET /movie/:id)
+- Method: GET
+- URL example: http://localhost:3001/movie/1
+- Click Send.
+- Expected:
+  - 200 with movie data if id exists
+  - 404 if id not found
+
+10) Update movie (PUT /movie/:id)
+- Method: PUT
+- URL example: http://localhost:3001/movie/1
+- Body: raw + JSON
+- Paste:
+{
+  "title": "Inception Updated",
+  "rating": 9.0
+}
+- Click Send.
+- Expected: success message.
+
+11) Challenge test: duplicate title on update
+- Make sure you already have 2 different movies.
+- Try updating movie B title to movie A title.
+- Expected: 400 Bad Request (duplicate title).
+
+12) Delete movie (DELETE /movie/:id)
+- Method: DELETE
+- URL example: http://localhost:3001/movie/1
+- Click Send.
+- Expected: delete success message.
+- Send same DELETE again on same id.
+- Expected: 404 (not found).
