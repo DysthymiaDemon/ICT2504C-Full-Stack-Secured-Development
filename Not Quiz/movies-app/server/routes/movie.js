@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
         releaseDate: yup.string().trim().matches(/^\d{4}-\d{2}-\d{2}$/).required(),
         rating: yup.number().min(1).max(10).test(
             "decimal-place",
-            "rating must have at most 1 decimal place.",
+            "rating must have at the most 1 decimal place.",
             (value) => value === undefined || value === null || Number.isInteger(value * 10)
         ).nullable()
     });
