@@ -1,0 +1,53 @@
+Challenge Implementation Guide (Movies API)
+
+1) Optional genre filter in GET /movie
+- Read the query string value:
+  let genre = req.query.genre;
+- If genre is provided, add it to the Sequelize where condition:
+  condition.genre = { [Op.like]: `%${genre}%` };
+- This allows filtering movies by genre keyword.
+
+2) Optional minimum rating filter in GET /movie
+- Read the query string value:
+  let minRating = req.query.minRating;
+- If minRating is provided:
+  1. Convert it to a number.
+  2. Validate it is a valid number.
+  3. Add condition.rating = { [Op.gte]: parsedMinRating }.
+- If minRating is invalid, return HTTP 400 with a clear message.
+
+3) Check duplicate title before creating a movie (POST /movie)
+- Before Movie.create(data), query database for same title.
+- If a movie with same title exists, return HTTP 400.
+- Example message:
+  "A movie with the same title already exists."
+
+4) Check duplicate title before updating a movie (PUT /movie/:id)
+- Only do duplicate check if title is being updated.
+- Query for same title but exclude current movie id:
+  where: { title: data.title, id: { [Op.ne]: id } }
+- If found, return HTTP 400 with duplicate-title message.
+
+5) Validation requirements for create and update
+- Use yup validation schema.
+- title: string, trimmed, required for create, max 150.
+- synopsis: string, trimmed, required for create, max 1500.
+- genre: string, trimmed, required for create, max 150.
+- director: string, trimmed, required for create, max 150.
+- releaseDate: required for create, date format YYYY-MM-DD.
+- rating: optional, number between 1 and 10, at most 1 decimal place.
+
+6) List endpoint ordering requirement
+- In GET /movie, use:
+  order: [['title', 'ASC']]
+- This ensures movies are returned in ascending title order.
+
+7) Suggested endpoint test sequence
+- Create movie A (should pass).
+- Create movie A again with same title (should return 400).
+- Create movie B with different title (should pass).
+- GET /movie?search=keyword (should match title or synopsis).
+- GET /movie?genre=Action (should return only action movies).
+- GET /movie?minRating=8 (should return rating >= 8).
+- Update movie B title to movie A title (should return 400).
+- Delete movie by id (should return success message).
