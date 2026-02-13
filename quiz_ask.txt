@@ -47,4 +47,4 @@ Code readability and maintainability.
 
 -----------------------------
 
-Based on above quiz ask, and based on what was taught in topic 1 & 2 and how the code is written, and how the initial files code is written, formatted plus how comments are written (seems basic, headers only but check), code the app then tell me how to do the challenges
+Based on above quiz ask, and based on what was taught in topic 1 & 2 and how the code is written, and how the "Quiz" directory initial files code is written, formatted plus how comments are written (seems basic, headers only but check), code the app inside "Not Quiz" directory then tell me how to do the challenges.
