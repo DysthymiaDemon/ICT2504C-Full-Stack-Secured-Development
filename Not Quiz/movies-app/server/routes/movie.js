@@ -35,11 +35,7 @@ router.post("/", async (req, res) => {
         genre: yup.string().trim().max(150).required(),
         director: yup.string().trim().max(150).required(),
         releaseDate: yup.string().trim().required(),
-        rating: yup.number().min(1).max(10).test(
-            "decimal-place",
-            "rating must have at the most 1 decimal place.",
-            (value) => value === undefined || value === null || Number.isInteger(value * 10)
-        ).nullable()
+        rating: yup.number().min(1).max(10).nullable()
     });
 
     try {
@@ -63,27 +59,12 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     let condition = {};
     let search = req.query.search;
-    let genre = req.query.genre;
-    let minRating = req.query.minRating;
 
     if (search) {
         condition[Op.or] = [
             { title: { [Op.like]: `%${search}%` } },
             { synopsis: { [Op.like]: `%${search}%` } }
         ];
-    }
-
-    if (genre) {
-        condition.genre = { [Op.like]: `%${genre}%` };
-    }
-
-    if (minRating) {
-        let parsedMinRating = Number(minRating);
-        if (Number.isNaN(parsedMinRating)) {
-            res.status(400).json({ message: "minRating must be a number. Please type in an integer up to 1 decimal place." });
-            return;
-        }
-        condition.rating = { [Op.gte]: parsedMinRating };
     }
 
     let list = await Movie.findAll({
@@ -121,11 +102,7 @@ router.put("/:id", async (req, res) => {
         genre: yup.string().trim().max(150),
         director: yup.string().trim().max(150),
         releaseDate: yup.string().trim(),
-        rating: yup.number().min(1).max(10).test(
-            "decimal-place",
-            "rating must have at most 1 decimal place.",
-            (value) => value === undefined || value === null || Number.isInteger(value * 10)
-        ).nullable()
+        rating: yup.number().min(1).max(10).nullable()
     });
 
     try {
