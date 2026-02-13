@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
         synopsis: yup.string().trim().max(1500).required(),
         genre: yup.string().trim().max(150).required(),
         director: yup.string().trim().max(150).required(),
-        releaseDate: yup.string().trim().matches(/^\d{4}-\d{2}-\d{2}$/).required(),
+        releaseDate: yup.string().trim().required(),
         rating: yup.number().min(1).max(10).test(
             "decimal-place",
             "rating must have at the most 1 decimal place.",
@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
 
         let duplicateTitle = await isDuplicateTitle(data.title);
         if (duplicateTitle) {
-            res.status(400).json({ message: "A movie with the same title already exists." });
+            res.status(400).json({ message: "A movie with the same title already exists. Please modify your submission." });
             return;
         }
 
@@ -80,7 +80,7 @@ router.get("/", async (req, res) => {
     if (minRating) {
         let parsedMinRating = Number(minRating);
         if (Number.isNaN(parsedMinRating)) {
-            res.status(400).json({ message: "minRating must be a number." });
+            res.status(400).json({ message: "minRating must be a number. Please type in an integer up to 1 decimal place." });
             return;
         }
         condition.rating = { [Op.gte]: parsedMinRating };
@@ -120,7 +120,7 @@ router.put("/:id", async (req, res) => {
         synopsis: yup.string().trim().max(1500),
         genre: yup.string().trim().max(150),
         director: yup.string().trim().max(150),
-        releaseDate: yup.string().trim().matches(/^\d{4}-\d{2}-\d{2}$/),
+        releaseDate: yup.string().trim(),
         rating: yup.number().min(1).max(10).test(
             "decimal-place",
             "rating must have at most 1 decimal place.",
@@ -138,7 +138,7 @@ router.put("/:id", async (req, res) => {
         if (data.title) {
             let duplicateTitle = await isDuplicateTitle(data.title, id);
             if (duplicateTitle) {
-                res.status(400).json({ message: "A movie with the same title already exists." });
+                res.status(400).json({ message: "A movie with the same title already exists. Please modify your submission." });
                 return;
             }
         }
@@ -153,7 +153,7 @@ router.put("/:id", async (req, res) => {
         }
         else {
             res.status(400).json({
-                message: `Cannot update movie with id ${id}.`
+                message: `Cannot update movie with id ${id}. Please check your submission.`
             });
         }
     }
@@ -181,7 +181,7 @@ router.delete("/:id", async (req, res) => {
     }
     else {
         res.status(400).json({
-            message: `Cannot delete movie with id ${id}.`
+            message: `Cannot delete movie with id ${id}. Please check your submission.`
         });
     }
 });
