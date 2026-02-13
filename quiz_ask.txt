@@ -1,0 +1,50 @@
+Coding
+Question 21 (80 points) 
+Movies API
+
+Objective:
+Develop a Node.js Web API using an SQLite database for CRUD (Create, Read, Update, Delete) operations on movies.
+
+The Movie model should include the following attributes:
+
+Title (string): The title of the movie, required, max 150 characters.
+Synopsis (text): A summary of the movie, required, max 1500 characters.
+Genre (string): The type of the movie (e.g., romance, science fiction), required, max 150 characters.
+Director (string): The person who directed the movie, required, max 150 characters.
+Release Date (date only): The date the movie was released, required.
+Rating (decimal): The average rating given to the movie, optional, between 1 to 10, with 1 decimal place.
+Requirements:
+
+Modify the lab solution with an SQLite database for the Movies App. (10 marks)
+Project folder name: movies-app
+Database file name: data/movies.sqlite
+Model file name: models/Movie.js
+Route file name: routes/movie.js
+Use the movie route with the URL: /movie
+Define the Sequelize model Movie with appropriate attributes and use the table name “movies”. (20 marks)
+Define the route endpoints for CRUD operations: (40 marks)
+Create a new movie. (10 marks)
+Retrieve a list of movies, with search query by title or synopsis, ordered by title (ascending). (10 marks)
+Retrieve a movie by its ID. (5 marks)
+Update an existing movie. (10 marks)
+Delete a movie by its ID. (5 marks)
+Challenge: (10 marks)
+Accept an optional query string for genre. If the query string is provided, filter the list based on the genre.
+Accept an optional query string for minimum rating. If the query string is provided, filter the list based on the minimum rating.
+Before creating, check if a movie with the same title already exists in the database. If the movie exists, return error code 400 with an appropriate message.
+Before updating, check if a movie with the same title already exists in the database. If the movie exists and has a different ID from the one being updated, return error code 400 with an appropriate message.
+For the endpoint to retrieve a list of movies: (5 marks)
+For the endpoints to create and update a movie: (5 marks)
+Evaluation Criteria:
+
+Proper use of Sequelize for database operations.
+Correctness and completeness of API endpoints.
+Validation of input data.
+Error handling with appropriate response status codes.
+Descriptive and meaningful names for variables and functions.
+Code readability and maintainability.
+
+
+-----------------------------
+
+Based on above quiz ask, and based on what was taught in topic 1 & 2 and how the code is written, and how the initial files code is written, formatted plus how comments are written (seems basic, headers only but check), code the app then tell me how to do the challenges
