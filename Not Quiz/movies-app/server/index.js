@@ -19,16 +19,6 @@ app.get("/", (req, res) => {
 const movieRoute = require('./routes/movie');
 app.use("/movie", movieRoute);
 
-// Handle invalid JSON body
-app.use((err, req, res, next) => {
-    if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
-        return res.status(400).json({
-            message: "Invalid JSON format in request body."
-        });
-    }
-    next(err);
-});
-
 const db = require('./models');
 db.sequelize.sync({ alter: false })
     .then(() => {
