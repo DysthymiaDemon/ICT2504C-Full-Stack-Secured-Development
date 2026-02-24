@@ -34,8 +34,12 @@ router.post("/", async (req, res) => {
         synopsis: yup.string().trim().max(1500).required(),
         genre: yup.string().trim().max(150).required(),
         director: yup.string().trim().max(150).required(),
-        releaseDate: yup.string().trim().required(),
-        rating: yup.number().min(1).max(10).nullable()
+        releaseDate: yup.string().trim().matches(/^\d{4}-\d{2}-\d{2}$/).required(),
+        rating: yup.number().min(1).max(10).test(
+            "decimal-place",
+            "rating must have at most 1 decimal place.",
+            (value) => value === undefined || value === null || Number.isInteger(value * 10)
+        ).nullable()
     });
 
     try {
@@ -44,7 +48,7 @@ router.post("/", async (req, res) => {
 
         let duplicateTitle = await isDuplicateTitle(data.title);
         if (duplicateTitle) {
-            res.status(400).json({ message: "A movie with the same title already exists. Please modify your submission." });
+            res.status(400).json({ message: "A movie with the same title already exists." });
             return;
         }
 
@@ -59,12 +63,27 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     let condition = {};
     let search = req.query.search;
+    let genre = req.query.genre;
+    let minRating = req.query.minRating;
 
     if (search) {
         condition[Op.or] = [
             { title: { [Op.like]: `%${search}%` } },
             { synopsis: { [Op.like]: `%${search}%` } }
         ];
+    }
+
+    if (genre) {
+        condition.genre = { [Op.like]: `%${genre}%` };
+    }
+
+    if (minRating) {
+        let parsedMinRating = Number(minRating);
+        if (Number.isNaN(parsedMinRating)) {
+            res.status(400).json({ message: "minRating must be a number." });
+            return;
+        }
+        condition.rating = { [Op.gte]: parsedMinRating };
     }
 
     let list = await Movie.findAll({
@@ -101,8 +120,12 @@ router.put("/:id", async (req, res) => {
         synopsis: yup.string().trim().max(1500),
         genre: yup.string().trim().max(150),
         director: yup.string().trim().max(150),
-        releaseDate: yup.string().trim(),
-        rating: yup.number().min(1).max(10).nullable()
+        releaseDate: yup.string().trim().matches(/^\d{4}-\d{2}-\d{2}$/),
+        rating: yup.number().min(1).max(10).test(
+            "decimal-place",
+            "rating must have at most 1 decimal place.",
+            (value) => value === undefined || value === null || Number.isInteger(value * 10)
+        ).nullable()
     });
 
     try {
@@ -115,7 +138,7 @@ router.put("/:id", async (req, res) => {
         if (data.title) {
             let duplicateTitle = await isDuplicateTitle(data.title, id);
             if (duplicateTitle) {
-                res.status(400).json({ message: "A movie with the same title already exists. Please modify your submission." });
+                res.status(400).json({ message: "A movie with the same title already exists." });
                 return;
             }
         }
@@ -130,7 +153,7 @@ router.put("/:id", async (req, res) => {
         }
         else {
             res.status(400).json({
-                message: `Cannot update movie with id ${id}. Please check your submission.`
+                message: `Cannot update movie with id ${id}.`
             });
         }
     }
@@ -158,7 +181,7 @@ router.delete("/:id", async (req, res) => {
     }
     else {
         res.status(400).json({
-            message: `Cannot delete movie with id ${id}. Please check your submission.`
+            message: `Cannot delete movie with id ${id}.`
         });
     }
 });
