@@ -11,42 +11,11 @@ We only use:
 
 ## This Is What Your File Structure Should Look Like
 
+**Copyable Code**
 ```text
 ICT2504C-Full-Stack-Secured-Development/
-├─ Topic 1 - Node.js Web API/
-│  └─ learning-app/
-│     └─ server/
-│        ├─ index.js
-│        ├─ routes/
-│        │  └─ tutorial.js
-│        ├─ package.json
-│        └─ package-lock.json
-├─ Topic 2 - Sequelize ORM and Input Validation/
-│  └─ lab2_sqlite_solution/
-│     └─ learning-app/
-│        └─ server/
-│           ├─ .env.example
-│           ├─ index.js
-│           ├─ models/
-│           │  ├─ index.js
-│           │  └─ Tutorial.js
-│           ├─ routes/
-│           │  └─ tutorial.js
-│           ├─ package.json
-│           └─ package-lock.json
 └─ Not Quiz/
    ├─ learning-app/
-   ├─ movies-app/
-   │  └─ server/
-   │     ├─ index.js
-   │     ├─ models/
-   │     │  ├─ index.js
-   │     │  └─ Movie.js
-   │     ├─ routes/
-   │     │  └─ movie.js
-   │     ├─ .env
-   │     ├─ package.json
-   │     └─ package-lock.json
    └─ Tutorial/
       ├─ topic1_topic2_learning_app_walkthrough.ipynb
       └─ topic1_topic2_learning_app_walkthrough.md
@@ -65,10 +34,30 @@ Learning goals:
 3. Upgrade to SQLite + Sequelize (Topic 2 style).
 4. Apply request validation and robust CRUD flow.
 
+## Prerequisite Setup Commands
+
+**Copyable Code**
+```bash
+cd "Topic 2 - Sequelize ORM and Input Validation/lab2_sqlite_solution/learning-app/server"
+npm install
+copy .env.example .env
+npm start
+```
+
+**Tip**
+- Run `npm install` once per server folder before `npm start`.
+
+**FYI**
+- `nodemon` is used by `npm start`, so the server auto-restarts on file changes.
+
+**Meaning**
+- Verify runtime first, install dependencies in each project folder, then start the correct server for Topic 1 or Topic 2.
+
 ---
 
 ## Code Cell 1 - `package.json` Basics
 
+**Copyable Code**
 ```json
 {
   "name": "server",
@@ -91,14 +80,20 @@ Learning goals:
 }
 ```
 
-Summary:
-- This file defines project metadata, start script, and required packages.
+**Tip**
 - `scripts.start` is what runs when you type `npm start`.
+
+**FYI**
+- This file defines project metadata, start script, and required packages.
+
+**Meaning**
+- This file defines project metadata, start script, and required packages. `scripts.start` is what runs when you type `npm start`.
 
 ---
 
 ## Code Cell 2 - Install and Run Commands
 
+**Copyable Code**
 ```bash
 # Move into the server folder
 cd "Topic 2 - Sequelize ORM and Input Validation/lab2_sqlite_solution/learning-app/server"
@@ -110,14 +105,20 @@ npm install
 npm start
 ```
 
-Summary:
-- You install dependencies once, then run the API server.
+**Tip**
 - `nodemon` restarts automatically when you save code changes.
+
+**FYI**
+- You install dependencies once, then run the API server.
+
+**Meaning**
+- You install dependencies once, then run the API server. `nodemon` restarts automatically when you save code changes.
 
 ---
 
 ## Code Cell 3 - Topic 1 `index.js` (API Entry Point)
 
+**Copyable Code**
 ```js
 require('dotenv').config();
 const express = require('express');
@@ -151,14 +152,20 @@ app.listen(port, () => {
 });
 ```
 
-Summary:
-- This is the server bootstrap: middleware setup, base route, route mount, listen port.
+**Tip**
 - It demonstrates the main Express app lifecycle in Topic 1.
+
+**FYI**
+- This is the server bootstrap: middleware setup, base route, route mount, listen port.
+
+**Meaning**
+- This is the server bootstrap: middleware setup, base route, route mount, listen port. It demonstrates the main Express app lifecycle in Topic 1.
 
 ---
 
 ## Code Cell 4 - Topic 1 `routes/tutorial.js` (In-Memory CRUD Start)
 
+**Copyable Code**
 ```js
 const express = require('express');
 
@@ -178,14 +185,20 @@ router.get('/', (req, res) => {
 module.exports = router;
 ```
 
-Summary:
-- Topic 1 first teaches routing + request/response using simple array storage.
+**Tip**
 - It is great for learning flow, but not persistent like a database.
+
+**FYI**
+- Topic 1 first teaches routing + request/response using simple array storage.
+
+**Meaning**
+- Topic 1 first teaches routing + request/response using simple array storage. It is great for learning flow, but not persistent like a database.
 
 ---
 
 ## Code Cell 5 - Checkpoint 1 (Quick API Test)
 
+**Copyable Code**
 ```bash
 # Create one tutorial
 curl -X POST http://localhost:3001/tutorial ^
@@ -196,28 +209,40 @@ curl -X POST http://localhost:3001/tutorial ^
 curl http://localhost:3001/tutorial
 ```
 
-Summary:
-- First request creates data, second request reads data.
+**Tip**
 - Restart server and data disappears, which shows why Topic 2 introduces a real DB.
+
+**FYI**
+- First request creates data, second request reads data.
+
+**Meaning**
+- First request creates data, second request reads data. Restart server and data disappears, which shows why Topic 2 introduces a real DB.
 
 ---
 
 ## Code Cell 6 - Topic 2 `.env` (Runtime Configuration)
 
+**Copyable Code**
 ```env
 APP_PORT = 3001
 CLIENT_URL = "http://localhost:3000"
 DB_FILE = "data/learning.sqlite"
 ```
 
-Summary:
-- Environment variables let you configure app behavior without hardcoding values.
+**Tip**
 - `DB_FILE` decides where SQLite data is stored.
+
+**FYI**
+- Environment variables let you configure app behavior without hardcoding values.
+
+**Meaning**
+- Environment variables let you configure app behavior without hardcoding values. `DB_FILE` decides where SQLite data is stored.
 
 ---
 
 ## Code Cell 7 - Topic 2 `models/index.js` (Sequelize Init + Model Loading)
 
+**Copyable Code**
 ```js
 'use strict';
 
@@ -259,14 +284,20 @@ db.Sequelize = Sequelize;
 module.exports = db;
 ```
 
-Summary:
-- This file connects Sequelize to SQLite and loads models dynamically.
+**Tip**
 - It is the bridge between model files and route files.
+
+**FYI**
+- This file connects Sequelize to SQLite and loads models dynamically.
+
+**Meaning**
+- This file connects Sequelize to SQLite and loads models dynamically. It is the bridge between model files and route files.
 
 ---
 
 ## Code Cell 8 - Topic 2 `models/Tutorial.js` (Define Table Schema)
 
+**Copyable Code**
 ```js
 module.exports = (sequelize, DataTypes) => {
     const Tutorial = sequelize.define("Tutorial", {
@@ -285,14 +316,20 @@ module.exports = (sequelize, DataTypes) => {
 };
 ```
 
-Summary:
-- A model is your DB table blueprint in code.
+**Tip**
 - Data types and required rules are defined here.
+
+**FYI**
+- A model is your DB table blueprint in code.
+
+**Meaning**
+- A model is your DB table blueprint in code. Data types and required rules are defined here.
 
 ---
 
 ## Code Cell 9 - Topic 2 `index.js` with `sequelize.sync`
 
+**Copyable Code**
 ```js
 const express = require('express');
 const cors = require('cors');
@@ -331,14 +368,20 @@ db.sequelize.sync({ alter: false })
     });
 ```
 
-Summary:
-- This is Topic 1 entry point plus DB sync step.
+**Tip**
 - Server starts only after DB setup succeeds.
+
+**FYI**
+- This is Topic 1 entry point plus DB sync step.
+
+**Meaning**
+- This is Topic 1 entry point plus DB sync step. Server starts only after DB setup succeeds.
 
 ---
 
 ## Code Cell 10 - Topic 2 `POST /tutorial` (Validation + Create)
 
+**Copyable Code**
 ```js
 const { Tutorial } = require('../models');
 const yup = require("yup");
@@ -367,14 +410,20 @@ router.post("/", async (req, res) => {
 });
 ```
 
-Summary:
-- Topic 2 adds strict input validation before DB insert.
+**Tip**
 - This prevents malformed or missing data from being saved.
+
+**FYI**
+- Topic 2 adds strict input validation before DB insert.
+
+**Meaning**
+- Topic 2 adds strict input validation before DB insert. This prevents malformed or missing data from being saved.
 
 ---
 
 ## Code Cell 11 - Topic 2 `GET /tutorial` (Search Query)
 
+**Copyable Code**
 ```js
 const { Op } = require("sequelize");
 
@@ -399,14 +448,20 @@ router.get("/", async (req, res) => {
 });
 ```
 
-Summary:
-- Query parameters drive dynamic filtering.
+**Tip**
 - `Op.like` with `%` is how partial search is done.
+
+**FYI**
+- Query parameters drive dynamic filtering.
+
+**Meaning**
+- Query parameters drive dynamic filtering. `Op.like` with `%` is how partial search is done.
 
 ---
 
 ## Code Cell 12 - Topic 2 `GET /tutorial/:id` (Find by Primary Key)
 
+**Copyable Code**
 ```js
 router.get("/:id", async (req, res) => {
     let id = req.params.id;                 // URL parameter value
@@ -422,14 +477,20 @@ router.get("/:id", async (req, res) => {
 });
 ```
 
-Summary:
-- This teaches URL parameter handling and not-found logic.
+**Tip**
 - Returning after 404 prevents accidental extra code execution.
+
+**FYI**
+- This teaches URL parameter handling and not-found logic.
+
+**Meaning**
+- This teaches URL parameter handling and not-found logic. Returning after 404 prevents accidental extra code execution.
 
 ---
 
 ## Code Cell 13 - Topic 2 `PUT /tutorial/:id` (Validate + Update)
 
+**Copyable Code**
 ```js
 router.put("/:id", async (req, res) => {
     let id = req.params.id;
@@ -467,14 +528,20 @@ router.put("/:id", async (req, res) => {
 });
 ```
 
-Summary:
-- Update flow is: check exists -> validate -> update -> return status message.
+**Tip**
 - This keeps update behavior predictable and safe.
+
+**FYI**
+- Update flow is: check exists -> validate -> update -> return status message.
+
+**Meaning**
+- Update flow is: check exists -> validate -> update -> return status message. This keeps update behavior predictable and safe.
 
 ---
 
 ## Code Cell 14 - Topic 2 `DELETE /tutorial/:id` (Delete by ID)
 
+**Copyable Code**
 ```js
 router.delete("/:id", async (req, res) => {
     let id = req.params.id;
@@ -499,14 +566,20 @@ router.delete("/:id", async (req, res) => {
 });
 ```
 
-Summary:
-- Delete flow mirrors update flow: check exists, attempt operation, return clear result.
+**Tip**
 - This is the final CRUD piece taught in Topic 2.
+
+**FYI**
+- Delete flow mirrors update flow: check exists, attempt operation, return clear result.
+
+**Meaning**
+- Delete flow mirrors update flow: check exists, attempt operation, return clear result. This is the final CRUD piece taught in Topic 2.
 
 ---
 
 ## Code Cell 15 - Checkpoint 2 (Practice Task)
 
+**Copyable Code**
 ```js
 // Exercise:
 // Add one optional query filter into GET /tutorial.
@@ -514,14 +587,20 @@ Summary:
 // If query is provided, include it in condition before findAll().
 ```
 
-Summary:
-- This reinforces dynamic condition building, a key Topic 2 skill.
+**Tip**
 - You practice extending an existing endpoint without breaking current behavior.
+
+**FYI**
+- This reinforces dynamic condition building, a key Topic 2 skill.
+
+**Meaning**
+- This reinforces dynamic condition building, a key Topic 2 skill. You practice extending an existing endpoint without breaking current behavior.
 
 ---
 
 ## Code Cell 16 - Exercise Scaffold (Guided)
 
+**Copyable Code**
 ```js
 router.get("/", async (req, res) => {
     let condition = {};
@@ -547,9 +626,14 @@ router.get("/", async (req, res) => {
 });
 ```
 
-Summary:
-- This is a partial solution so you still do the important thinking.
+**Tip**
 - It teaches incremental endpoint enhancement.
+
+**FYI**
+- This is a partial solution so you still do the important thinking.
+
+**Meaning**
+- This is a partial solution so you still do the important thinking. It teaches incremental endpoint enhancement.
 
 ---
 
@@ -567,6 +651,7 @@ Summary:
   - In Postman, use `Body -> raw -> JSON`
   - Keep keys and string values in double quotes
   - Example valid body:
+    **Copyable Code**
     ```json
     {
       "title": "Intro",
@@ -581,6 +666,7 @@ Summary:
   - You send `res.sendStatus(404)` but code continues and tries another `res.json(...)`
 - Fix:
   - Always stop the function immediately:
+    **Copyable Code**
     ```js
     if (!tutorial) {
         res.sendStatus(404);
@@ -596,6 +682,7 @@ Summary:
   - Sequelize functions return Promises
 - Fix:
   - Use `await` in async handlers:
+    **Copyable Code**
     ```js
     let tutorial = await Tutorial.findByPk(id);
     ```
@@ -614,6 +701,7 @@ Summary:
     - `CLIENT_URL`
     - `DB_FILE`
   - For Topic 2 SQLite setup, use:
+    **Copyable Code**
     ```env
     APP_PORT = 3001
     CLIENT_URL = "http://localhost:3000"
@@ -634,6 +722,7 @@ What changed from Topic 1 to Topic 2:
 Next step:
 - Apply the same structure to `movies-app`:
 
+**Copyable Code**
 ```text
 movies-app/
 └─ server/
