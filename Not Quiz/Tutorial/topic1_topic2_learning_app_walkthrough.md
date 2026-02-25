@@ -63,6 +63,13 @@ npm start
 
 ## Code Cell 1 - `package.json` Basics
 
+**Brief writeup**
+- This mirrors Topic 1 and Topic 2 project setup: dependencies, scripts, and runtime entry points for the API server.
+
+**Tip**
+- Read `scripts.start` first when onboarding a Node project; it tells you how the app is intended to run.
+
+
 ```json
 {
   "name": "server",
@@ -98,6 +105,13 @@ npm start
 
 ## Code Cell 2 - Install and Run Commands
 
+**Brief writeup**
+- These are the minimum bootstrapping commands used in Topic 1 and Topic 2 labs to install dependencies and start the backend safely.
+
+**Tip**
+- Always run commands from the correct `server` directory to avoid installing into the wrong project.
+
+
 ```bash
 # Move into the server folder
 cd "Topic 2 - Sequelize ORM and Input Validation/lab2_sqlite_solution/learning-app/server"
@@ -121,6 +135,13 @@ npm start
 ---
 
 ## Code Cell 3 - Topic 1 `index.js` (API Entry Point)
+
+**Brief writeup**
+- This is the Topic 1 Express bootstrap flow: load env, register middleware, mount routes, and start listening.
+
+**Tip**
+- If routes fail, verify the mount path (`/tutorial`) and that the route file exports a router.
+
 
 ```js
 require('dotenv').config();
@@ -168,6 +189,13 @@ app.listen(port, () => {
 
 ## Code Cell 4 - Topic 1 `routes/tutorial.js` (In-Memory CRUD Start)
 
+**Brief writeup**
+- Topic 1 uses in-memory arrays to teach request lifecycle and CRUD behavior before introducing databases.
+
+**Tip**
+- Treat in-memory storage as training-only; data loss on restart is expected behavior.
+
+
 ```js
 const express = require('express');
 
@@ -200,6 +228,13 @@ module.exports = router;
 
 ## Code Cell 5 - Checkpoint 1 (Quick API Test)
 
+**Brief writeup**
+- This checkpoint validates your Topic 1 API contract end-to-end by writing and reading tutorial records.
+
+**Tip**
+- Keep one known-good curl example so you can quickly regression-test after route changes.
+
+
 ```bash
 # Create one tutorial
 curl -X POST http://localhost:3001/tutorial ^
@@ -223,6 +258,13 @@ curl http://localhost:3001/tutorial
 
 ## Code Cell 6 - Topic 2 `.env` (Runtime Configuration)
 
+**Brief writeup**
+- Topic 2 externalizes runtime config so the same code can run across environments with different ports and DB files.
+
+**Tip**
+- Never hardcode secrets or environment-specific values directly into source files.
+
+
 ```env
 APP_PORT = 3001
 CLIENT_URL = "http://localhost:3000"
@@ -241,6 +283,13 @@ DB_FILE = "data/learning.sqlite"
 ---
 
 ## Code Cell 7 - Topic 2 `models/index.js` (Sequelize Init + Model Loading)
+
+**Brief writeup**
+- This is the Sequelize model bootstrap from Topic 2: initialize DB connection, load models, and expose a single DB object.
+
+**Tip**
+- If a model is missing at runtime, check filename case and the exported model factory signature.
+
 
 ```js
 'use strict';
@@ -296,6 +345,13 @@ module.exports = db;
 
 ## Code Cell 8 - Topic 2 `models/Tutorial.js` (Define Table Schema)
 
+**Brief writeup**
+- This model defines the Tutorial entity schema and field constraints that Sequelize enforces against SQLite.
+
+**Tip**
+- Keep model field names aligned with request payload keys to reduce mapping bugs.
+
+
 ```js
 module.exports = (sequelize, DataTypes) => {
     const Tutorial = sequelize.define("Tutorial", {
@@ -326,6 +382,13 @@ module.exports = (sequelize, DataTypes) => {
 ---
 
 ## Code Cell 9 - Topic 2 `index.js` with `sequelize.sync`
+
+**Brief writeup**
+- This upgrade from Topic 1 to Topic 2 initializes persistent storage by syncing Sequelize models before serving traffic.
+
+**Tip**
+- On startup issues, check DB path and whether `sequelize.sync` errors are logged before app listen.
+
 
 ```js
 const express = require('express');
@@ -378,6 +441,13 @@ db.sequelize.sync({ alter: false })
 
 ## Code Cell 10 - Topic 2 `POST /tutorial` (Validation + Create)
 
+**Brief writeup**
+- Topic 2 adds input validation and DB-backed create logic so invalid payloads are rejected early and cleanly.
+
+**Tip**
+- Validate first, then write to DB; this keeps bad records out of persistent storage.
+
+
 ```js
 const { Tutorial } = require('../models');
 const yup = require("yup");
@@ -419,6 +489,13 @@ router.post("/", async (req, res) => {
 
 ## Code Cell 11 - Topic 2 `GET /tutorial` (Search Query)
 
+**Brief writeup**
+- This endpoint demonstrates filtered reads with query parameters, a common Topic 2 pattern for scalable list APIs.
+
+**Tip**
+- Normalize and sanitize query inputs before building dynamic conditions.
+
+
 ```js
 const { Op } = require("sequelize");
 
@@ -456,6 +533,13 @@ router.get("/", async (req, res) => {
 
 ## Code Cell 12 - Topic 2 `GET /tutorial/:id` (Find by Primary Key)
 
+**Brief writeup**
+- This route shows record retrieval by primary key with proper not-found handling for stable API behavior.
+
+**Tip**
+- Return 404 for missing IDs instead of empty success responses; clients can handle that reliably.
+
+
 ```js
 router.get("/:id", async (req, res) => {
     let id = req.params.id;                 // URL parameter value
@@ -483,6 +567,13 @@ router.get("/:id", async (req, res) => {
 ---
 
 ## Code Cell 13 - Topic 2 `PUT /tutorial/:id` (Validate + Update)
+
+**Brief writeup**
+- This combines Topic 2 validation with update semantics to safely mutate existing rows.
+
+**Tip**
+- Re-check existence before update so clients get deterministic errors for stale IDs.
+
 
 ```js
 router.put("/:id", async (req, res) => {
@@ -534,6 +625,13 @@ router.put("/:id", async (req, res) => {
 
 ## Code Cell 14 - Topic 2 `DELETE /tutorial/:id` (Delete by ID)
 
+**Brief writeup**
+- This completes CRUD by deleting a record and confirms result handling for both success and missing targets.
+
+**Tip**
+- Log delete outcomes during testing to verify you are deleting the intended record only.
+
+
 ```js
 router.delete("/:id", async (req, res) => {
     let id = req.params.id;
@@ -571,6 +669,13 @@ router.delete("/:id", async (req, res) => {
 
 ## Code Cell 15 - Checkpoint 2 (Practice Task)
 
+**Brief writeup**
+- This practice block reinforces Topic 2 by requiring full CRUD and validation behavior against persistent data.
+
+**Tip**
+- Test both happy path and invalid payload path before considering the checkpoint complete.
+
+
 ```js
 // Exercise:
 // Add one optional query filter into GET /tutorial.
@@ -590,6 +695,13 @@ router.delete("/:id", async (req, res) => {
 ---
 
 ## Code Cell 16 - Exercise Scaffold (Guided)
+
+**Brief writeup**
+- This scaffold is a guided handoff for students to implement remaining logic using Topic 1 routing and Topic 2 model patterns.
+
+**Tip**
+- Implement one endpoint at a time and verify each with curl or Postman before moving forward.
+
 
 ```js
 router.get("/", async (req, res) => {
