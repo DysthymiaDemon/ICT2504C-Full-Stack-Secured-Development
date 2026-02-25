@@ -11,14 +11,21 @@ We only use:
 
 ## This Is What Your File Structure Should Look Like
 
-**Copyable Code**
 ```text
-ICT2504C-Full-Stack-Secured-Development/
-└─ Not Quiz/
-   ├─ learning-app/
-   └─ Tutorial/
-      ├─ topic1_topic2_learning_app_walkthrough.ipynb
-      └─ topic1_topic2_learning_app_walkthrough.md
+Not Quiz/
+├─ learning-app/
+│  └─ server/
+│     ├─ .gitignore
+│     ├─ index.js
+│     ├─ package.json
+│     ├─ package-lock.json
+│     ├─ README.md
+│     └─ models/
+│        ├─ index.js
+│        └─ Tutorial.js
+└─ Tutorial/
+   ├─ topic1_topic2_learning_app_walkthrough.ipynb
+   └─ topic1_topic2_learning_app_walkthrough.md
 ```
 
 ## Audience, Prerequisites, Learning Goals
@@ -36,7 +43,6 @@ Learning goals:
 
 ## Prerequisite Setup Commands
 
-**Copyable Code**
 ```bash
 cd "Topic 2 - Sequelize ORM and Input Validation/lab2_sqlite_solution/learning-app/server"
 npm install
@@ -57,7 +63,6 @@ npm start
 
 ## Code Cell 1 - `package.json` Basics
 
-**Copyable Code**
 ```json
 {
   "name": "server",
@@ -93,7 +98,6 @@ npm start
 
 ## Code Cell 2 - Install and Run Commands
 
-**Copyable Code**
 ```bash
 # Move into the server folder
 cd "Topic 2 - Sequelize ORM and Input Validation/lab2_sqlite_solution/learning-app/server"
@@ -118,7 +122,6 @@ npm start
 
 ## Code Cell 3 - Topic 1 `index.js` (API Entry Point)
 
-**Copyable Code**
 ```js
 require('dotenv').config();
 const express = require('express');
@@ -165,7 +168,6 @@ app.listen(port, () => {
 
 ## Code Cell 4 - Topic 1 `routes/tutorial.js` (In-Memory CRUD Start)
 
-**Copyable Code**
 ```js
 const express = require('express');
 
@@ -198,7 +200,6 @@ module.exports = router;
 
 ## Code Cell 5 - Checkpoint 1 (Quick API Test)
 
-**Copyable Code**
 ```bash
 # Create one tutorial
 curl -X POST http://localhost:3001/tutorial ^
@@ -222,7 +223,6 @@ curl http://localhost:3001/tutorial
 
 ## Code Cell 6 - Topic 2 `.env` (Runtime Configuration)
 
-**Copyable Code**
 ```env
 APP_PORT = 3001
 CLIENT_URL = "http://localhost:3000"
@@ -242,7 +242,6 @@ DB_FILE = "data/learning.sqlite"
 
 ## Code Cell 7 - Topic 2 `models/index.js` (Sequelize Init + Model Loading)
 
-**Copyable Code**
 ```js
 'use strict';
 
@@ -297,7 +296,6 @@ module.exports = db;
 
 ## Code Cell 8 - Topic 2 `models/Tutorial.js` (Define Table Schema)
 
-**Copyable Code**
 ```js
 module.exports = (sequelize, DataTypes) => {
     const Tutorial = sequelize.define("Tutorial", {
@@ -329,7 +327,6 @@ module.exports = (sequelize, DataTypes) => {
 
 ## Code Cell 9 - Topic 2 `index.js` with `sequelize.sync`
 
-**Copyable Code**
 ```js
 const express = require('express');
 const cors = require('cors');
@@ -381,7 +378,6 @@ db.sequelize.sync({ alter: false })
 
 ## Code Cell 10 - Topic 2 `POST /tutorial` (Validation + Create)
 
-**Copyable Code**
 ```js
 const { Tutorial } = require('../models');
 const yup = require("yup");
@@ -423,7 +419,6 @@ router.post("/", async (req, res) => {
 
 ## Code Cell 11 - Topic 2 `GET /tutorial` (Search Query)
 
-**Copyable Code**
 ```js
 const { Op } = require("sequelize");
 
@@ -461,7 +456,6 @@ router.get("/", async (req, res) => {
 
 ## Code Cell 12 - Topic 2 `GET /tutorial/:id` (Find by Primary Key)
 
-**Copyable Code**
 ```js
 router.get("/:id", async (req, res) => {
     let id = req.params.id;                 // URL parameter value
@@ -490,7 +484,6 @@ router.get("/:id", async (req, res) => {
 
 ## Code Cell 13 - Topic 2 `PUT /tutorial/:id` (Validate + Update)
 
-**Copyable Code**
 ```js
 router.put("/:id", async (req, res) => {
     let id = req.params.id;
@@ -541,7 +534,6 @@ router.put("/:id", async (req, res) => {
 
 ## Code Cell 14 - Topic 2 `DELETE /tutorial/:id` (Delete by ID)
 
-**Copyable Code**
 ```js
 router.delete("/:id", async (req, res) => {
     let id = req.params.id;
@@ -579,7 +571,6 @@ router.delete("/:id", async (req, res) => {
 
 ## Code Cell 15 - Checkpoint 2 (Practice Task)
 
-**Copyable Code**
 ```js
 // Exercise:
 // Add one optional query filter into GET /tutorial.
@@ -600,7 +591,6 @@ router.delete("/:id", async (req, res) => {
 
 ## Code Cell 16 - Exercise Scaffold (Guided)
 
-**Copyable Code**
 ```js
 router.get("/", async (req, res) => {
     let condition = {};
@@ -651,7 +641,6 @@ router.get("/", async (req, res) => {
   - In Postman, use `Body -> raw -> JSON`
   - Keep keys and string values in double quotes
   - Example valid body:
-    **Copyable Code**
     ```json
     {
       "title": "Intro",
@@ -666,7 +655,6 @@ router.get("/", async (req, res) => {
   - You send `res.sendStatus(404)` but code continues and tries another `res.json(...)`
 - Fix:
   - Always stop the function immediately:
-    **Copyable Code**
     ```js
     if (!tutorial) {
         res.sendStatus(404);
@@ -682,7 +670,6 @@ router.get("/", async (req, res) => {
   - Sequelize functions return Promises
 - Fix:
   - Use `await` in async handlers:
-    **Copyable Code**
     ```js
     let tutorial = await Tutorial.findByPk(id);
     ```
@@ -701,7 +688,6 @@ router.get("/", async (req, res) => {
     - `CLIENT_URL`
     - `DB_FILE`
   - For Topic 2 SQLite setup, use:
-    **Copyable Code**
     ```env
     APP_PORT = 3001
     CLIENT_URL = "http://localhost:3000"
@@ -722,7 +708,6 @@ What changed from Topic 1 to Topic 2:
 Next step:
 - Apply the same structure to `movies-app`:
 
-**Copyable Code**
 ```text
 movies-app/
 └─ server/
