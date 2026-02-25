@@ -50,25 +50,26 @@ copy .env.example .env
 npm start
 ```
 
+Verify runtime first, install dependencies in each project folder, then start the correct server for Topic 1 or Topic 2.
+
 **Tip**
 - Run `npm install` once per server folder before `npm start`.
 
-**FYI**
+**Note**
 - `nodemon` is used by `npm start`, so the server auto-restarts on file changes.
-
-**Meaning**
-- Verify runtime first, install dependencies in each project folder, then start the correct server for Topic 1 or Topic 2.
 
 ---
 
 ## Code Cell 1 - `package.json` Basics
 
-**Brief writeup**
-- This mirrors Topic 1 and Topic 2 project setup: dependencies, scripts, and runtime entry points for the API server.
+This mirrors Topic 1 and Topic 2 project setup: dependencies, scripts, and runtime entry points for the API server. This file defines project metadata, start script, and required packages. `scripts.start` is what runs when you type `npm start`.
 
 **Tip**
 - Read `scripts.start` first when onboarding a Node project; it tells you how the app is intended to run.
+- `scripts.start` is what runs when you type `npm start`.
 
+**Note**
+- This file defines project metadata, start script, and required packages.
 
 ```json
 {
@@ -92,25 +93,18 @@ npm start
 }
 ```
 
-**Tip**
-- `scripts.start` is what runs when you type `npm start`.
-
-**FYI**
-- This file defines project metadata, start script, and required packages.
-
-**Meaning**
-- This file defines project metadata, start script, and required packages. `scripts.start` is what runs when you type `npm start`.
-
 ---
 
 ## Code Cell 2 - Install and Run Commands
 
-**Brief writeup**
-- These are the minimum bootstrapping commands used in Topic 1 and Topic 2 labs to install dependencies and start the backend safely.
+These are the minimum bootstrapping commands used in Topic 1 and Topic 2 labs to install dependencies and start the backend safely. You install dependencies once, then run the API server. `nodemon` restarts automatically when you save code changes.
 
 **Tip**
 - Always run commands from the correct `server` directory to avoid installing into the wrong project.
+- `nodemon` restarts automatically when you save code changes.
 
+**Note**
+- You install dependencies once, then run the API server.
 
 ```bash
 # Move into the server folder
@@ -123,25 +117,18 @@ npm install
 npm start
 ```
 
-**Tip**
-- `nodemon` restarts automatically when you save code changes.
-
-**FYI**
-- You install dependencies once, then run the API server.
-
-**Meaning**
-- You install dependencies once, then run the API server. `nodemon` restarts automatically when you save code changes.
-
 ---
 
 ## Code Cell 3 - Topic 1 `index.js` (API Entry Point)
 
-**Brief writeup**
-- This is the Topic 1 Express bootstrap flow: load env, register middleware, mount routes, and start listening.
+This is the Topic 1 Express bootstrap flow: load env, register middleware, mount routes, and start listening. This is the server bootstrap: middleware setup, base route, route mount, listen port. It demonstrates the main Express app lifecycle in Topic 1.
 
 **Tip**
 - If routes fail, verify the mount path (`/tutorial`) and that the route file exports a router.
+- It demonstrates the main Express app lifecycle in Topic 1.
 
+**Note**
+- This is the server bootstrap: middleware setup, base route, route mount, listen port.
 
 ```js
 require('dotenv').config();
@@ -176,25 +163,18 @@ app.listen(port, () => {
 });
 ```
 
-**Tip**
-- It demonstrates the main Express app lifecycle in Topic 1.
-
-**FYI**
-- This is the server bootstrap: middleware setup, base route, route mount, listen port.
-
-**Meaning**
-- This is the server bootstrap: middleware setup, base route, route mount, listen port. It demonstrates the main Express app lifecycle in Topic 1.
-
 ---
 
 ## Code Cell 4 - Topic 1 `routes/tutorial.js` (In-Memory CRUD Start)
 
-**Brief writeup**
-- Topic 1 uses in-memory arrays to teach request lifecycle and CRUD behavior before introducing databases.
+Topic 1 uses in-memory arrays to teach request lifecycle and CRUD behavior before introducing databases. Topic 1 first teaches routing + request/response using simple array storage. It is great for learning flow, but not persistent like a database.
 
 **Tip**
 - Treat in-memory storage as training-only; data loss on restart is expected behavior.
+- It is great for learning flow, but not persistent like a database.
 
+**Note**
+- Topic 1 first teaches routing + request/response using simple array storage.
 
 ```js
 const express = require('express');
@@ -215,25 +195,18 @@ router.get('/', (req, res) => {
 module.exports = router;
 ```
 
-**Tip**
-- It is great for learning flow, but not persistent like a database.
-
-**FYI**
-- Topic 1 first teaches routing + request/response using simple array storage.
-
-**Meaning**
-- Topic 1 first teaches routing + request/response using simple array storage. It is great for learning flow, but not persistent like a database.
-
 ---
 
 ## Code Cell 5 - Checkpoint 1 (Quick API Test)
 
-**Brief writeup**
-- This checkpoint validates your Topic 1 API contract end-to-end by writing and reading tutorial records.
+This checkpoint validates your Topic 1 API contract end-to-end by writing and reading tutorial records. First request creates data, second request reads data. Restart server and data disappears, which shows why Topic 2 introduces a real DB.
 
 **Tip**
 - Keep one known-good curl example so you can quickly regression-test after route changes.
+- Restart server and data disappears, which shows why Topic 2 introduces a real DB.
 
+**Note**
+- First request creates data, second request reads data.
 
 ```bash
 # Create one tutorial
@@ -245,25 +218,18 @@ curl -X POST http://localhost:3001/tutorial ^
 curl http://localhost:3001/tutorial
 ```
 
-**Tip**
-- Restart server and data disappears, which shows why Topic 2 introduces a real DB.
-
-**FYI**
-- First request creates data, second request reads data.
-
-**Meaning**
-- First request creates data, second request reads data. Restart server and data disappears, which shows why Topic 2 introduces a real DB.
-
 ---
 
 ## Code Cell 6 - Topic 2 `.env` (Runtime Configuration)
 
-**Brief writeup**
-- Topic 2 externalizes runtime config so the same code can run across environments with different ports and DB files.
+Topic 2 externalizes runtime config so the same code can run across environments with different ports and DB files. Environment variables let you configure app behavior without hardcoding values. `DB_FILE` decides where SQLite data is stored.
 
 **Tip**
 - Never hardcode secrets or environment-specific values directly into source files.
+- `DB_FILE` decides where SQLite data is stored.
 
+**Note**
+- Environment variables let you configure app behavior without hardcoding values.
 
 ```env
 APP_PORT = 3001
@@ -271,25 +237,18 @@ CLIENT_URL = "http://localhost:3000"
 DB_FILE = "data/learning.sqlite"
 ```
 
-**Tip**
-- `DB_FILE` decides where SQLite data is stored.
-
-**FYI**
-- Environment variables let you configure app behavior without hardcoding values.
-
-**Meaning**
-- Environment variables let you configure app behavior without hardcoding values. `DB_FILE` decides where SQLite data is stored.
-
 ---
 
 ## Code Cell 7 - Topic 2 `models/index.js` (Sequelize Init + Model Loading)
 
-**Brief writeup**
-- This is the Sequelize model bootstrap from Topic 2: initialize DB connection, load models, and expose a single DB object.
+This is the Sequelize model bootstrap from Topic 2: initialize DB connection, load models, and expose a single DB object. This file connects Sequelize to SQLite and loads models dynamically. It is the bridge between model files and route files.
 
 **Tip**
 - If a model is missing at runtime, check filename case and the exported model factory signature.
+- It is the bridge between model files and route files.
 
+**Note**
+- This file connects Sequelize to SQLite and loads models dynamically.
 
 ```js
 'use strict';
@@ -332,25 +291,18 @@ db.Sequelize = Sequelize;
 module.exports = db;
 ```
 
-**Tip**
-- It is the bridge between model files and route files.
-
-**FYI**
-- This file connects Sequelize to SQLite and loads models dynamically.
-
-**Meaning**
-- This file connects Sequelize to SQLite and loads models dynamically. It is the bridge between model files and route files.
-
 ---
 
 ## Code Cell 8 - Topic 2 `models/Tutorial.js` (Define Table Schema)
 
-**Brief writeup**
-- This model defines the Tutorial entity schema and field constraints that Sequelize enforces against SQLite.
+This model defines the Tutorial entity schema and field constraints that Sequelize enforces against SQLite. A model is your DB table blueprint in code. Data types and required rules are defined here.
 
 **Tip**
 - Keep model field names aligned with request payload keys to reduce mapping bugs.
+- Data types and required rules are defined here.
 
+**Note**
+- A model is your DB table blueprint in code.
 
 ```js
 module.exports = (sequelize, DataTypes) => {
@@ -370,25 +322,18 @@ module.exports = (sequelize, DataTypes) => {
 };
 ```
 
-**Tip**
-- Data types and required rules are defined here.
-
-**FYI**
-- A model is your DB table blueprint in code.
-
-**Meaning**
-- A model is your DB table blueprint in code. Data types and required rules are defined here.
-
 ---
 
 ## Code Cell 9 - Topic 2 `index.js` with `sequelize.sync`
 
-**Brief writeup**
-- This upgrade from Topic 1 to Topic 2 initializes persistent storage by syncing Sequelize models before serving traffic.
+This upgrade from Topic 1 to Topic 2 initializes persistent storage by syncing Sequelize models before serving traffic. This is Topic 1 entry point plus DB sync step. Server starts only after DB setup succeeds.
 
 **Tip**
 - On startup issues, check DB path and whether `sequelize.sync` errors are logged before app listen.
+- Server starts only after DB setup succeeds.
 
+**Note**
+- This is Topic 1 entry point plus DB sync step.
 
 ```js
 const express = require('express');
@@ -428,25 +373,18 @@ db.sequelize.sync({ alter: false })
     });
 ```
 
-**Tip**
-- Server starts only after DB setup succeeds.
-
-**FYI**
-- This is Topic 1 entry point plus DB sync step.
-
-**Meaning**
-- This is Topic 1 entry point plus DB sync step. Server starts only after DB setup succeeds.
-
 ---
 
 ## Code Cell 10 - Topic 2 `POST /tutorial` (Validation + Create)
 
-**Brief writeup**
-- Topic 2 adds input validation and DB-backed create logic so invalid payloads are rejected early and cleanly.
+Topic 2 adds input validation and DB-backed create logic so invalid payloads are rejected early and cleanly. Topic 2 adds strict input validation before DB insert. This prevents malformed or missing data from being saved.
 
 **Tip**
 - Validate first, then write to DB; this keeps bad records out of persistent storage.
+- This prevents malformed or missing data from being saved.
 
+**Note**
+- Topic 2 adds strict input validation before DB insert.
 
 ```js
 const { Tutorial } = require('../models');
@@ -476,25 +414,18 @@ router.post("/", async (req, res) => {
 });
 ```
 
-**Tip**
-- This prevents malformed or missing data from being saved.
-
-**FYI**
-- Topic 2 adds strict input validation before DB insert.
-
-**Meaning**
-- Topic 2 adds strict input validation before DB insert. This prevents malformed or missing data from being saved.
-
 ---
 
 ## Code Cell 11 - Topic 2 `GET /tutorial` (Search Query)
 
-**Brief writeup**
-- This endpoint demonstrates filtered reads with query parameters, a common Topic 2 pattern for scalable list APIs.
+This endpoint demonstrates filtered reads with query parameters, a common Topic 2 pattern for scalable list APIs. Query parameters drive dynamic filtering. `Op.like` with `%` is how partial search is done.
 
 **Tip**
 - Normalize and sanitize query inputs before building dynamic conditions.
+- `Op.like` with `%` is how partial search is done.
 
+**Note**
+- Query parameters drive dynamic filtering.
 
 ```js
 const { Op } = require("sequelize");
@@ -520,25 +451,18 @@ router.get("/", async (req, res) => {
 });
 ```
 
-**Tip**
-- `Op.like` with `%` is how partial search is done.
-
-**FYI**
-- Query parameters drive dynamic filtering.
-
-**Meaning**
-- Query parameters drive dynamic filtering. `Op.like` with `%` is how partial search is done.
-
 ---
 
 ## Code Cell 12 - Topic 2 `GET /tutorial/:id` (Find by Primary Key)
 
-**Brief writeup**
-- This route shows record retrieval by primary key with proper not-found handling for stable API behavior.
+This route shows record retrieval by primary key with proper not-found handling for stable API behavior. This teaches URL parameter handling and not-found logic. Returning after 404 prevents accidental extra code execution.
 
 **Tip**
 - Return 404 for missing IDs instead of empty success responses; clients can handle that reliably.
+- Returning after 404 prevents accidental extra code execution.
 
+**Note**
+- This teaches URL parameter handling and not-found logic.
 
 ```js
 router.get("/:id", async (req, res) => {
@@ -555,25 +479,18 @@ router.get("/:id", async (req, res) => {
 });
 ```
 
-**Tip**
-- Returning after 404 prevents accidental extra code execution.
-
-**FYI**
-- This teaches URL parameter handling and not-found logic.
-
-**Meaning**
-- This teaches URL parameter handling and not-found logic. Returning after 404 prevents accidental extra code execution.
-
 ---
 
 ## Code Cell 13 - Topic 2 `PUT /tutorial/:id` (Validate + Update)
 
-**Brief writeup**
-- This combines Topic 2 validation with update semantics to safely mutate existing rows.
+This combines Topic 2 validation with update semantics to safely mutate existing rows. Update flow is: check exists -> validate -> update -> return status message. This keeps update behavior predictable and safe.
 
 **Tip**
 - Re-check existence before update so clients get deterministic errors for stale IDs.
+- This keeps update behavior predictable and safe.
 
+**Note**
+- Update flow is: check exists -> validate -> update -> return status message.
 
 ```js
 router.put("/:id", async (req, res) => {
@@ -612,25 +529,18 @@ router.put("/:id", async (req, res) => {
 });
 ```
 
-**Tip**
-- This keeps update behavior predictable and safe.
-
-**FYI**
-- Update flow is: check exists -> validate -> update -> return status message.
-
-**Meaning**
-- Update flow is: check exists -> validate -> update -> return status message. This keeps update behavior predictable and safe.
-
 ---
 
 ## Code Cell 14 - Topic 2 `DELETE /tutorial/:id` (Delete by ID)
 
-**Brief writeup**
-- This completes CRUD by deleting a record and confirms result handling for both success and missing targets.
+This completes CRUD by deleting a record and confirms result handling for both success and missing targets. Delete flow mirrors update flow: check exists, attempt operation, return clear result. This is the final CRUD piece taught in Topic 2.
 
 **Tip**
 - Log delete outcomes during testing to verify you are deleting the intended record only.
+- This is the final CRUD piece taught in Topic 2.
 
+**Note**
+- Delete flow mirrors update flow: check exists, attempt operation, return clear result.
 
 ```js
 router.delete("/:id", async (req, res) => {
@@ -656,25 +566,18 @@ router.delete("/:id", async (req, res) => {
 });
 ```
 
-**Tip**
-- This is the final CRUD piece taught in Topic 2.
-
-**FYI**
-- Delete flow mirrors update flow: check exists, attempt operation, return clear result.
-
-**Meaning**
-- Delete flow mirrors update flow: check exists, attempt operation, return clear result. This is the final CRUD piece taught in Topic 2.
-
 ---
 
 ## Code Cell 15 - Checkpoint 2 (Practice Task)
 
-**Brief writeup**
-- This practice block reinforces Topic 2 by requiring full CRUD and validation behavior against persistent data.
+This practice block reinforces Topic 2 by requiring full CRUD and validation behavior against persistent data. This reinforces dynamic condition building, a key Topic 2 skill. You practice extending an existing endpoint without breaking current behavior.
 
 **Tip**
 - Test both happy path and invalid payload path before considering the checkpoint complete.
+- You practice extending an existing endpoint without breaking current behavior.
 
+**Note**
+- This reinforces dynamic condition building, a key Topic 2 skill.
 
 ```js
 // Exercise:
@@ -683,25 +586,18 @@ router.delete("/:id", async (req, res) => {
 // If query is provided, include it in condition before findAll().
 ```
 
-**Tip**
-- You practice extending an existing endpoint without breaking current behavior.
-
-**FYI**
-- This reinforces dynamic condition building, a key Topic 2 skill.
-
-**Meaning**
-- This reinforces dynamic condition building, a key Topic 2 skill. You practice extending an existing endpoint without breaking current behavior.
-
 ---
 
 ## Code Cell 16 - Exercise Scaffold (Guided)
 
-**Brief writeup**
-- This scaffold is a guided handoff for students to implement remaining logic using Topic 1 routing and Topic 2 model patterns.
+This scaffold is a guided handoff for students to implement remaining logic using Topic 1 routing and Topic 2 model patterns. This is a partial solution so you still do the important thinking. It teaches incremental endpoint enhancement. ## Common Mistakes and Fixes 1. Invalid JSON in request body: Symptom: API returns `400` Terminal may show JSON parse error (for example: expected property name) Why it happens: Single quotes instead of double quotes Missing quote on a key Trailing comma at the end of JSON Fix: In Postman, use `Body -> raw -> JSON` Keep keys and string values in double quotes Example valid body: ```json { "title": "Intro", "description": "Topic 2 test" 2. Missing `return` after 404: Error like `Cannot set headers after they are sent to the client` You send `res.sendStatus(404)` but code continues and tries another `res.json(...)` Always stop the function immediately: ```js if (!tutorial) { res.sendStatus(404); return; 3. Missing `await`: Response data looks wrong or empty Logic runs before DB call finishes Sequelize functions return Promises Use `await` in async handlers: let tutorial = await Tutorial.findByPk(id); Keep `async` in route handler signature. 4. Wrong `.env` values: Server starts on unexpected port CORS errors from frontend DB file not created where expected Wrong key names or wrong relative path Verify keys exactly: `APP_PORT` `CLIENT_URL` `DB_FILE` For Topic 2 SQLite setup, use: ```env APP_PORT = 3001 CLIENT_URL = "http://localhost:3000" DB_FILE = "data/learning.sqlite" Restart server after editing `.env`. ## Recap and Next Step What changed from Topic 1 to Topic 2: 1. In-memory array -> persistent SQLite database. 2. Simple routes -> model-backed routes with Sequelize. 3. No validation -> schema validation with `yup`. 4. Basic API -> stronger CRUD and error handling flow. Next step: Apply the same structure to `movies-app`: ```text movies-app/ └─ server/ ├─ index.js ├─ models/ │  ├─ index.js │  └─ Movie.js ├─ routes/ ├─ .env ├─ package.json └─ package-lock.json
 
 **Tip**
 - Implement one endpoint at a time and verify each with curl or Postman before moving forward.
+- It teaches incremental endpoint enhancement.
 
+**Note**
+- This is a partial solution so you still do the important thinking.
 
 ```js
 router.get("/", async (req, res) => {
@@ -728,108 +624,4 @@ router.get("/", async (req, res) => {
 });
 ```
 
-**Tip**
-- It teaches incremental endpoint enhancement.
-
-**FYI**
-- This is a partial solution so you still do the important thinking.
-
-**Meaning**
-- This is a partial solution so you still do the important thinking. It teaches incremental endpoint enhancement.
-
 ---
-
-## Common Mistakes and Fixes
-
-1. Invalid JSON in request body:
-- Symptom:
-  - API returns `400`
-  - Terminal may show JSON parse error (for example: expected property name)
-- Why it happens:
-  - Single quotes instead of double quotes
-  - Missing quote on a key
-  - Trailing comma at the end of JSON
-- Fix:
-  - In Postman, use `Body -> raw -> JSON`
-  - Keep keys and string values in double quotes
-  - Example valid body:
-    ```json
-    {
-      "title": "Intro",
-      "description": "Topic 2 test"
-    }
-    ```
-
-2. Missing `return` after 404:
-- Symptom:
-  - Error like `Cannot set headers after they are sent to the client`
-- Why it happens:
-  - You send `res.sendStatus(404)` but code continues and tries another `res.json(...)`
-- Fix:
-  - Always stop the function immediately:
-    ```js
-    if (!tutorial) {
-        res.sendStatus(404);
-        return;
-    }
-    ```
-
-3. Missing `await`:
-- Symptom:
-  - Response data looks wrong or empty
-  - Logic runs before DB call finishes
-- Why it happens:
-  - Sequelize functions return Promises
-- Fix:
-  - Use `await` in async handlers:
-    ```js
-    let tutorial = await Tutorial.findByPk(id);
-    ```
-  - Keep `async` in route handler signature.
-
-4. Wrong `.env` values:
-- Symptom:
-  - Server starts on unexpected port
-  - CORS errors from frontend
-  - DB file not created where expected
-- Why it happens:
-  - Wrong key names or wrong relative path
-- Fix:
-  - Verify keys exactly:
-    - `APP_PORT`
-    - `CLIENT_URL`
-    - `DB_FILE`
-  - For Topic 2 SQLite setup, use:
-    ```env
-    APP_PORT = 3001
-    CLIENT_URL = "http://localhost:3000"
-    DB_FILE = "data/learning.sqlite"
-    ```
-  - Restart server after editing `.env`.
-
----
-
-## Recap and Next Step
-
-What changed from Topic 1 to Topic 2:
-1. In-memory array -> persistent SQLite database.
-2. Simple routes -> model-backed routes with Sequelize.
-3. No validation -> schema validation with `yup`.
-4. Basic API -> stronger CRUD and error handling flow.
-
-Next step:
-- Apply the same structure to `movies-app`:
-
-```text
-movies-app/
-└─ server/
-   ├─ index.js
-   ├─ models/
-   │  ├─ index.js
-   │  └─ Movie.js
-   ├─ routes/
-   │  └─ movie.js
-   ├─ .env
-   ├─ package.json
-   └─ package-lock.json
-```
