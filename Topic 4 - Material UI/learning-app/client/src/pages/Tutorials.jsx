@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { AccessTime } from '@mui/icons-material';
-import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
+import { AccessTime, Search, Clear } from '@mui/icons-material';
+import { Box, Typography, Grid, Card, CardContent, Input, IconButton } from '@mui/material';
 import dayjs from 'dayjs';
 import global from '../global';
 import http from '../http';
 
 function Tutorials() {
   const [tutorialList, setTutorialList] = useState([]);
+
+  const [search, setSearch] = useState('');
+  const onSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
 
   useEffect(() => {
     http.get('/tutorial').then((res) => {
@@ -20,6 +25,16 @@ function Tutorials() {
       <Typography variant="h5" sx={{ my: 2 }}>
         Tutorials
       </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+      <Input value={search} placeholder="Search"
+      onChange={onSearchChange} />
+      <IconButton color="primary">
+      <Search />
+      </IconButton>
+      <IconButton color="primary">
+      <Clear />
+      </IconButton>
+      </Box>
       <Grid container spacing={2}>
         {tutorialList.map((tutorial) => {
           return (
