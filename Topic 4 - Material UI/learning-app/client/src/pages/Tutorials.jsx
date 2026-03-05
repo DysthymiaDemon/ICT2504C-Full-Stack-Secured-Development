@@ -13,12 +13,36 @@ function Tutorials() {
     setSearch(e.target.value);
   };
 
-  useEffect(() => {
+  const getTutorials = () => {
     http.get('/tutorial').then((res) => {
-      console.log(res.data);
       setTutorialList(res.data);
     });
+  };
+
+  const searchTutorials = () => {
+    http.get(`/tutorial?search=${search}`).then((res) => {
+      setTutorialList(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getTutorials();
   }, []);
+
+  const onSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      searchTutorials();
+    }
+  };
+
+  const onClickSearch = () => {
+    searchTutorials();
+  };
+
+  const onClickClear = () => {
+    setSearch('');
+    getTutorials();
+  };
 
   return (
     <Box>
@@ -26,14 +50,18 @@ function Tutorials() {
         Tutorials
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-      <Input value={search} placeholder="Search"
-      onChange={onSearchChange} />
-      <IconButton color="primary">
-      <Search />
-      </IconButton>
-      <IconButton color="primary">
-      <Clear />
-      </IconButton>
+        <Input
+          value={search}
+          placeholder="Search"
+          onChange={onSearchChange}
+          onKeyDown={onSearchKeyDown}
+        />
+        <IconButton color="primary" onClick={onClickSearch}>
+          <Search />
+        </IconButton>
+        <IconButton color="primary" onClick={onClickClear}>
+          <Clear />
+        </IconButton>
       </Box>
       <Grid container spacing={2}>
         {tutorialList.map((tutorial) => {
