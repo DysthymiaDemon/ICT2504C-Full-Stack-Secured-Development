@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { AccessTime, Search, Clear } from '@mui/icons-material';
-import { Box, Typography, Grid, Card, CardContent, Input, IconButton } from '@mui/material';
+import { AccessTime, Search, Clear, Edit } from '@mui/icons-material';
+import { Box, Typography, Grid, Card, CardContent, Input, IconButton, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import global from '../global';
 import http from '../http';
@@ -62,6 +63,12 @@ function Tutorials() {
         <IconButton color="primary" onClick={onClickClear}>
           <Clear />
         </IconButton>
+        <Box sx={{ flexGrow: 1 }} />
+        <Link to="/addtutorial" style={{ textDecoration: 'none' }}>
+          <Button variant="contained">
+            Add
+          </Button>
+        </Link>
       </Box>
       <Grid container spacing={2}>
         {tutorialList.map((tutorial) => {
@@ -69,9 +76,16 @@ function Tutorials() {
             <Grid item xs={12} md={6} lg={4} key={tutorial.id}>
               <Card>
                 <CardContent>
-                  <Typography variant="h6" sx={{ mb: 1 }}>
-                    {tutorial.title}
-                  </Typography>
+                  <Box sx={{ display: 'flex', mb: 1 }}>
+                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                      {tutorial.title}
+                    </Typography>
+                    <Link to={`/edittutorial/${tutorial.id}`} style={{ textDecoration: 'none' }}>
+                      <IconButton color="primary" sx={{ padding: '4px' }}>
+                        <Edit />
+                      </IconButton>
+                    </Link>
+                  </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }} color="text.secondary">
                     <AccessTime sx={{ mr: 1 }} />
                     <Typography>{dayjs(tutorial.createdAt).format(global.datetimeFormat)}</Typography>
