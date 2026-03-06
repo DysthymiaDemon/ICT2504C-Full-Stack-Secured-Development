@@ -3,10 +3,9 @@ import { Container, AppBar, Toolbar, Typography } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import MyTheme from './themes/MyTheme';
-import Tutorials from './pages/Tutorials';
-import AddTutorial from './pages/AddTutorial';
-import EditTutorial from './pages/EditTutorial';
-import MyForm from './pages/MyForm';
+import Events from './pages/Events';
+import AddEvent from './pages/AddEvent';
+import EditEvent from './pages/EditEvent';
 
 function App() {
   return (
@@ -20,21 +19,17 @@ function App() {
                   Learning
                 </Typography>
               </Link>
-              <Link to="/tutorials" ><Typography>Tutorials</Typography></Link>
+              <Link to="/events"><Typography>Events</Typography></Link>
             </Toolbar>
           </Container>
         </AppBar>
 
         <Container>
           <Routes>
-            <Route path={"/"} element={<Tutorials />} />
-            <Route path={"/tutorials"} element={<Tutorials />} />
-            <Route path={"/addtutorial"} element={<AddTutorial />} />
-            <Route path={"/edittutorial/:id"} element={<EditTutorial />} />
-            <Route path={"/events"} element={<Events />} />
-            <Route path={"/addevent"} element={<AddEvent />} />
-            <Route path={"/editevent/:id"} element={<EditEvent />} />
-            <Route path={"/form"} element={<MyForm />} />
+            <Route path="/" element={<Events />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/addevent" element={<AddEvent />} />
+            <Route path="/editevent/:id" element={<EditEvent />} />
           </Routes>
         </Container>
       </ThemeProvider>
