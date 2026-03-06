@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Typography, Grid, Card, CardContent, Input, IconButton, Button } from '@mui/material';
 import { AccessTime, Place, Search, Clear, Edit } from '@mui/icons-material';
@@ -9,11 +9,18 @@ import global from '../global';
 function Events() {
     const [eventsList, setEventsList] = useState([]);
     const [search, setSearch] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const getEvents = () => {
-        http.get('/event').then((res) => {
-            setEventsList(res.data);
-        });
+        setErrorMessage('');
+        http.get('/event')
+            .then((res) => {
+                setEventsList(res.data);
+            })
+            .catch(() => {
+                setEventsList([]);
+                setErrorMessage('Unable to load events. Please ensure the server is running on http://localhost:3001.');
+            });
     };
 
     const searchEvents = () => {
@@ -23,9 +30,15 @@ function Events() {
             return;
         }
 
-        http.get(`/event?search=${searchText}`).then((res) => {
-            setEventsList(res.data);
-        });
+        setErrorMessage('');
+        http.get(`/event?search=${searchText}`)
+            .then((res) => {
+                setEventsList(res.data);
+            })
+            .catch(() => {
+                setEventsList([]);
+                setErrorMessage('Search failed. Please check backend server connection.');
+            });
     };
 
     useEffect(() => {
@@ -108,6 +121,12 @@ function Events() {
                     );
                 })}
             </Grid>
+
+            {errorMessage && (
+                <Typography color="error" sx={{ mt: 2 }}>
+                    {errorMessage}
+                </Typography>
+            )}
         </Box>
     );
 }

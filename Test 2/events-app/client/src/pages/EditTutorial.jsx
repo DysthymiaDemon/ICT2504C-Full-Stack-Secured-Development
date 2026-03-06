@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
@@ -21,7 +21,7 @@ function EditTutorial() {
             setTutorial(res.data);
             setLoading(false);
         });
-    }, []);
+    }, [id]);
 
     const formik = useFormik({
         initialValues: tutorial,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography, TextField, Button, FormControl } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -27,12 +26,12 @@ function AddEvent() {
             name: yup
                 .string()
                 .trim()
-                .max(80, 'Name must be at most 80 characters')
+                .max(80, 'maximum 80 characters')
                 .required('Name is required'),
             details: yup
                 .string()
                 .trim()
-                .max(800, 'Details must be at most 800 characters'),
+                .max(800, 'maximum 800 characters'),
             eventDate: yup
                 .mixed()
                 .required('Event Date is required')
@@ -40,7 +39,7 @@ function AddEvent() {
             location: yup
                 .string()
                 .trim()
-                .max(200, 'Location must be at most 200 characters')
+                .max(200, 'maximum 200 characters')
                 .required('Location is required')
         }),
         onSubmit: (values) => {

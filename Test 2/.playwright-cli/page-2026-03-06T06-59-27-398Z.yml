@@ -1,0 +1,43 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "Learning" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e7]: Learning
+      - link "Events" [ref=e8] [cursor=pointer]:
+        - /url: /events
+        - paragraph [ref=e9]: Events
+  - generic [ref=e44]:
+    - heading "Add Event" [level=5] [ref=e45]
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - generic: Name
+        - generic [ref=e48]:
+          - textbox "Name" [ref=e49]
+          - group:
+            - generic: Name
+        - paragraph [ref=e67]: Name is required
+      - generic [ref=e50]:
+        - generic: Details
+        - generic [ref=e51]:
+          - textbox "Details" [ref=e52]
+          - group:
+            - generic: Details
+      - generic [ref=e54]:
+        - generic [ref=e55]: Select Date Time
+        - generic [ref=e56]:
+          - textbox "Select Date Time" [ref=e57]:
+            - /placeholder: DD/MM/YYYY hh:mm aa
+            - text: 07/03/2026 02:00 PM
+          - button "Choose date, selected date is Mar 7, 2026" [ref=e59] [cursor=pointer]:
+            - img [ref=e60]
+          - group:
+            - generic: Select Date Time
+      - generic [ref=e62]:
+        - generic: Location
+        - generic [ref=e63]:
+          - textbox "Location" [ref=e64]
+          - group:
+            - generic: Location
+        - paragraph [ref=e68]: Location is required
+      - button "Add" [active] [ref=e66] [cursor=pointer]: Add
